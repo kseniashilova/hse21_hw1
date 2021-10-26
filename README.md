@@ -45,7 +45,7 @@ multiqc -o trimmed_multiqc trimmed_fastqc
 ```
 Снова скачиваем отчеты в локальную директорию
 ```
-pscp -r -P 5222  -i "private_key.ppk" kashilova@92.242.58.92:/home/kashilova/sub/ftrimmed_astqc C:\Users\Пользователь\Desktop\биоинформатика
+pscp -r -P 5222  -i "private_key.ppk" kashilova@92.242.58.92:/home/kashilova/sub/trimmed_fastqc C:\Users\Пользователь\Desktop\биоинформатика
 pscp -r -P 5222  -i "private_key.ppk" kashilova@92.242.58.92:/home/kashilova/sub/trimmed_multiqc C:\Users\Пользователь\Desktop\биоинформатика
 ```
 С помощью программы “platanus assemble” собираем контиги из подрезанных чтений
