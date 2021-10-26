@@ -109,16 +109,16 @@ time platanus gap_close -o Poil -t 1 -c Poil_scaffold.fa -IP1 trimmed_fastq/oil_
 Новая последовательность в новом файле
 ```
 echo scaffold1_cov231 > tmp2.txt
-seqtk subseq Poil_gapClosed.fa tmp2.txt > scaffold1_len3833234_cov231.fna
+seqtk subseq Poil_gapClosed.fa tmp2.txt > scaffold2_len3833234_cov231.fasta
 ```
 Участки: 
 ```
-grep -o "N\+" scaffold1_len3833234_cov231.fna | wc -l
+grep -o "N\+" scaffold2_len3833234_cov231.fasta | wc -l
 ```
 Получилось **9** участков
 
 Символы:
 ```
-grep -o "N" scaffold1_len3833234_cov231.fna | wc -l
+grep -o "N" scaffold2_len3833234_cov231.fasta | wc -l
 ```
 Получилось **1847** символа
