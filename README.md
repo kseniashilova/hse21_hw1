@@ -59,7 +59,7 @@ user    7m53,083s
 sys     0m22,471s
 ```
 
-Проанализируем контиги с помощью программы в гугл коллаб
+Проанализируем контиги с помощью программы в гугл коллаб  
 Выпишем ответы на вопросы:
 
 ССЫЛКА НА КОЛЛАБ не забыть
@@ -82,3 +82,43 @@ time platanus scaffold -o Poil -t 1 -c Poil_contig.fa -IP1 trimmed_fastq/oil_R1_
 **2) Общая длина = 3872834**  
 **3) Длина самого длинного контига = 3833234**  
 **4) N50 = 3833234** 
+
+Пусть самая длинная последовательность лежит в отдельном файле
+```
+echo scaffold1_len3833234_cov231 > tmp.txt
+seqtk subseq Poil_scaffold.fa tmp.txt > scaffold1_len3833234_cov231.fasta
+```
+Посчитаем количество гэпов (участков, состоящих из букв N) и их общую длину  
+Количество участков (где 1 или более буква N)
+```
+ grep -o "N\+" scaffold1_len3833234_cov231.fasta | wc -l
+```
+Получилось **63** участка
+
+Количество символов N:
+```
+ grep -o "N" scaffold1_len3833234_cov231.fasta | wc -l
+```
+Получилось **6163** символа
+
+Запустим platanus gap lose
+```
+time platanus gap_close -o Poil -t 1 -c Poil_scaffold.fa -IP1 trimmed_fastq/oil_R1_sub.fastq.trimmed trimmed_fastq/oil_R2_sub.fastq.trimmed -OP2 trimmed_fastq/oilMP_S4_L001_R1_001_sub.fastq.int_trimmed trimmed_fastq/oilMP_S4_L001_R2_001_sub.fastq.int_trimmed 2> gapclose.log
+```
+
+Новая последовательность в новом файле
+```
+echo scaffold1_cov231 > tmp2.txt
+seqtk subseq Poil_gapClosed.fa tmp2.txt > scaffold1_len3833234_cov231.fna
+```
+Участки: 
+```
+grep -o "N\+" scaffold1_len3833234_cov231.fna | wc -l
+```
+Получилось **9** участков
+
+Символы:
+```
+grep -o "N" scaffold1_len3833234_cov231.fna | wc -l
+```
+Получилось **1847** символа
