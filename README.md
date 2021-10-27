@@ -116,7 +116,7 @@ seqtk subseq Poil_scaffold.fa tmp.txt > scaffold1_len3833234_cov231.fasta
 ```
 Получилось **6163** символа
 
-Запустим platanus gap lose
+Запустим platanus gap close
 ```
 time platanus gap_close -o Poil -t 1 -c Poil_scaffold.fa -IP1 trimmed_fastq/oil_R1_sub.fastq.trimmed trimmed_fastq/oil_R2_sub.fastq.trimmed -OP2 trimmed_fastq/oilMP_S4_L001_R1_001_sub.fastq.int_trimmed trimmed_fastq/oilMP_S4_L001_R2_001_sub.fastq.int_trimmed 2> gapclose.log
 ```
@@ -137,3 +137,60 @@ grep -o "N\+" scaffold2_len3833234_cov231.fasta | wc -l
 grep -o "N" scaffold2_len3833234_cov231.fasta | wc -l
 ```
 Получилось **1847** символа
+
+
+### Необязательная часть
+Посмотрим, как количество чтений, которые мы берем изначально случайным образом, влияют на качество (космотрим на количество скаффолдов и гэпов)    
+Запустим код, который выводит в файл file_extra.txt по три числа за один запуск (количество скаффолдов, количество участков гэпов, общая длина гэпов)  
+Запустим код для n1 = {1000000, 2000000, 3000000, 4000000, 5000000} и для n2 = {300000, 600000, 900000, 1200000, 1500000} соответственно 
+```
+seqtk sample -s1031 oil_R1.fastq n1 > oil_R1_sub.fastq
+seqtk sample -s1031 oil_R2.fastq n1 > oil_R2_sub.fastq
+seqtk sample -s1031 oilMP_S4_L001_R1_001.fastq n2 > oilMP_S4_L001_R1_001_sub.fastq
+seqtk sample -s1031 oilMP_S4_L001_R2_001.fastq n2 > oilMP_S4_L001_R2_001_sub.fastq
+
+mv oilMP_S4_L001_R1_001_sub.fastq sub
+mv oilMP_S4_L001_R2_001_sub.fastq sub
+mv oil_R1_sub.fastq sub
+mv oil_R2_sub.fastq sub 
+
+cd sub 
+
+platanus_trim oil_R1_sub.fastq  oil_R2_sub.fastq
+platanus_internal_trim oilMP_S4_L001_R1_001_sub.fastq oilMP_S4_L001_R2_001_sub.fastq
+
+ mv -v *trimmed trimmed_fastq
+ mv -v *.fastq fastq
+ 
+ time platanus assemble -o Poil -t 1 -m 8 -f trimmed_fastq/oil_R1_sub.fastq.trimmed  trimmed_fastq/oil_R2_sub.fastq.trimmed 2>assemble.log
+ 
+ time platanus scaffold -o Poil -t 1 -c Poil_contig.fa -IP1 trimmed_fastq/oil_R1_sub.fastq.trimmed trimmed_fastq/oil_R2_sub.fastq.trimmed -OP2 trimmed_fastq/oilMP_S4_L001_R1_001_sub.fastq.int_trimmed trimmed_fastq/oilMP_S4_L001_R2_001_sub.fastq.int_trimmed 2> scaffold.log
+ 
+ grep -c '>' Poil_scaffold.fa >> file_extra.txt
+ 
+ time platanus gap_close -o Poil -t 1 -c Poil_scaffold.fa -IP1 trimmed_fastq/oil_R1_sub.fastq.trimmed trimmed_fastq/oil_R2_sub.fastq.trimmed -OP2 trimmed_fastq/oilMP_S4_L001_R1_001_sub.fastq.int_trimmed trimmed_fastq/oilMP_S4_L001_R2_001_sub.fastq.int_trimmed 2> gapclose.log
+ 
+ grep -o "N\+" Poil_gapClosed.fa | wc -l >> file_extra.txt
+ grep -o "N" Poil_gapClosed.fa | wc -l >> file_extra.txt
+ 
+ rm fastq/*
+ rm trimmed_fastq/*
+ 
+```
+
+https://github.com/kseniashilova/hse21_hw1/blob/main/src/Graphics_amount_of_reads.ipynb
+
+
+Построим график, где по оси X будет число чтений, а по оси Y - количество скаффолдов
+![](https://github.com/kseniashilova/hse21_hw1/blob/main/images/gr1.PNG) 
+
+Видно, что с увеличением числа чтений уменьшается количество скаффолдов
+
+Построим график, где количество чтений по оси X, а по оси Y - количество пропусков (участков), нормированное на количество скаффолдов (мне кажется, этот критерий лучше, чем смотреть просто количество участков)
+
+![](https://github.com/kseniashilova/hse21_hw1/blob/main/images/gr2.PNG) 
+
+И построим график, где теперь по оси Y - общая длина пропусков нормированная на количество скаффолдов
+![](https://github.com/kseniashilova/hse21_hw1/blob/main/images/gr3.PNG) 
+
+Видно, что с увеличением числа чтений улучшается и качество, но при большом количестве чтений качество улучшается медленнее, чем на небольших значениях.
