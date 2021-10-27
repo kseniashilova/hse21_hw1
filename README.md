@@ -182,15 +182,15 @@ https://github.com/kseniashilova/hse21_hw1/blob/main/src/Graphics_amount_of_read
 
 
 Построим график, где по оси X будет число чтений, а по оси Y - количество скаффолдов
-![](https://github.com/kseniashilova/hse21_hw1/blob/main/images/gr1.PNG) 
+![график1](https://github.com/kseniashilova/hse21_hw1/blob/main/images/gr1.png) 
 
 Видно, что с увеличением числа чтений уменьшается количество скаффолдов
 
 Построим график, где количество чтений по оси X, а по оси Y - количество пропусков (участков), нормированное на количество скаффолдов (мне кажется, этот критерий лучше, чем смотреть просто количество участков)
 
-![](https://github.com/kseniashilova/hse21_hw1/blob/main/images/gr2.PNG) 
+![график2](https://github.com/kseniashilova/hse21_hw1/blob/main/images/gr2.png) 
 
 И построим график, где теперь по оси Y - общая длина пропусков нормированная на количество скаффолдов
-![](https://github.com/kseniashilova/hse21_hw1/blob/main/images/gr3.PNG) 
+![график3](https://github.com/kseniashilova/hse21_hw1/blob/main/images/gr3.png) 
 
 Видно, что с увеличением числа чтений улучшается и качество, но при большом количестве чтений качество улучшается медленнее, чем на небольших значениях.
