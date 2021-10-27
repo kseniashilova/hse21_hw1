@@ -1,0 +1,5 @@
+Module	Section	Sample Name	Source
+FastQC	all_sections	oilMP_S4_L001_R1_001_sub	/home/kashilova/sub/fastqc/oilMP_S4_L001_R1_001_sub_fastqc.zip
+FastQC	all_sections	oil_R1_sub	/home/kashilova/sub/fastqc/oil_R1_sub_fastqc.zip
+FastQC	all_sections	oilMP_S4_L001_R2_001_sub	/home/kashilova/sub/fastqc/oilMP_S4_L001_R2_001_sub_fastqc.zip
+FastQC	all_sections	oil_R2_sub	/home/kashilova/sub/fastqc/oil_R2_sub_fastqc.zip
