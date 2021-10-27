@@ -24,6 +24,13 @@ multiqc -o multiqc fastqc
 pscp -r -P 5222  -i "private_key.ppk" kashilova@92.242.58.92:/home/kashilova/sub/fastqc C:\Users\Пользователь\Desktop\биоинформатика
 pscp -r -P 5222  -i "private_key.ppk" kashilova@92.242.58.92:/home/kashilova/sub/multiqc C:\Users\Пользователь\Desktop\биоинформатика
 ```
+
+Скриншоты из отчета:
+![](https://github.com/kseniashilova/hse21_hw1/blob/main/images/1.PNG) 
+![](https://github.com/kseniashilova/hse21_hw1/blob/main/images/2.PNG)
+![](https://github.com/kseniashilova/hse21_hw1/blob/main/images/3.PNG)
+  
+    
 Используем platanus
 ```
 platanus_trim oil_R1_sub.fastq  oil_R2_sub.fastq
@@ -47,7 +54,14 @@ multiqc -o trimmed_multiqc trimmed_fastqc
 ```
 pscp -r -P 5222  -i "private_key.ppk" kashilova@92.242.58.92:/home/kashilova/sub/trimmed_fastqc C:\Users\Пользователь\Desktop\биоинформатика
 pscp -r -P 5222  -i "private_key.ppk" kashilova@92.242.58.92:/home/kashilova/sub/trimmed_multiqc C:\Users\Пользователь\Desktop\биоинформатика
-```
+```  
+  
+Скриншоты из отчета:
+![](https://github.com/kseniashilova/hse21_hw1/blob/main/images/4.PNG) 
+![](https://github.com/kseniashilova/hse21_hw1/blob/main/images/5.PNG)
+![](https://github.com/kseniashilova/hse21_hw1/blob/main/images/6.PNG)
+  
+  
 С помощью программы “platanus assemble” собираем контиги из подрезанных чтений
 ```
 time platanus assemble -o Poil -t 1 -m 8 -f trimmed_fastq/oil_R1_sub.fastq.trimmed  trimmed_fastq/oil_R2_sub.fastq.trimmed 2>assemble.log
@@ -60,10 +74,11 @@ sys     0m22,471s
 ```
 
 Проанализируем контиги с помощью программы в гугл коллаб  
-Выпишем ответы на вопросы:
 
-ССЫЛКА НА КОЛЛАБ не забыть
+https://github.com/kseniashilova/hse21_hw1/blob/main/src/Shilova_contigs.ipynb
 
+
+Выпишем ответы на вопросы:  
 **1) Общее количество контигов = 607**   
 **2) Их общая длина = 3923847**  
 **3) Длина самого длинного контига = 179307**  
@@ -75,9 +90,9 @@ time platanus scaffold -o Poil -t 1 -c Poil_contig.fa -IP1 trimmed_fastq/oil_R1_
 ```
 Код в гугл коллабе анализирует результирующий файл Poil_scaffold.fa
 
-ССЫЛКА НА КОЛЛАБ не забыть
+https://github.com/kseniashilova/hse21_hw1/blob/main/src/Shilova_contigs.ipynb
 
-Выпишу ответы на вопросы
+Выпишу ответы на вопросы  
 **1) Общее количество = 70**   
 **2) Общая длина = 3872834**  
 **3) Длина самого длинного контига = 3833234**  
